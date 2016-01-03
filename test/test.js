@@ -1,5 +1,5 @@
 'use strict';
-/*eslint no-console: 0*/
+
 import path from 'path';
 
 import {expect} from 'chai';
@@ -136,9 +136,11 @@ describe('rut-status', () => {
     const options = {};
 
     beforeEach(() => {
+      const query = {type: 'CEDULA'};
       nock.disableNetConnect();
       nock('https://portal.sidiv.registrocivil.cl')
         .get('/usuarios-portal/pages/DocumentRequestStatus.xhtml')
+        .query(query)
         .replyWithFile(200, path.join(__dirname, 'invalid.html'));
     });
 
