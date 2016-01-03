@@ -1,34 +1,29 @@
 'use strict';
 
-import request from 'request';
 import cheerio from 'cheerio';
 import Q from 'q';
+import rp from 'request-promise';
 
-export default (options, callback) => {
+const getStatus = (data, cb) => {
   const deferred = Q.defer();
   const qs = {
-    RUN: options.rut,
-    type: options.type,
-    serial: options.serial
+    RUN: data.rut,
+    type: data.type ? data.type.toUpperCase() : 'CEDULA',
+    serial: data.serial
   };
-  const url = 'https://portal.sidiv.registrocivil.cl/usuarios-portal/pages/DocumentRequestStatus.xhtml';
-  request.get({url: url, qs: qs, rejectUnauthorized: false}, (err, response, body) => {
-    if (err) {
-      deferred.reject(err);
-    } else if (response.statusCode !== 200) {
-      deferred.reject(new Error('Not found'));
-    } else {
-      const $ = cheerio.load(body);
-      const status = $('#tableResult .setWidthOfSecondColumn').text();
-      if (status !== '') {
-        deferred.resolve(status);
-      } else {
-        deferred.reject(new Error('Not found'));
-      }
-    }
-  });
-
-  deferred.promise.nodeify(callback);
-
+  const options = {
+    url: 'https://portal.sidiv.registrocivil.cl/usuarios-portal/pages/DocumentRequestStatus.xhtml',
+    qs: qs,
+    rejectUnauthorized: false,
+    transform: (body) => cheerio.load(body)
+  };
+  rp(options).then(($) => {
+    const status = $('#tableResult .setWidthOfSecondColumn').text();
+    if (status === '') deferred.reject(new Error('Not found'));
+    deferred.resolve(status);
+  }).catch((err) => deferred.reject(err));
+  deferred.promise.nodeify(cb);
   return deferred.promise;
 };
+
+module.exports = getStatus;
