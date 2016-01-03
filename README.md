@@ -24,8 +24,9 @@ Available types:
 - **PASAPORTE_DIPLOMATICO**: Pasaporte diplomático
 - **PASAPORTE_OFICIAL**: Pasaporte oficial
 
+[Try on Tonic](https://tonicdev.com/npm/rut-status)
 ```js
-import rutStatus from 'rut-status';
+const rutStatus = require('rut-status');
 
 const options = {
   rut: '11111111-1',
@@ -35,13 +36,13 @@ const options = {
 
 // Promise
 rutStatus(options)
-  .then(status => console.log(status)) // Vigente
-  .fail(err => console.error(err)); // null
+  .then(status => console.log(status))
+  .fail(err => console.error(err));
 
 // Callback
 rutStatus(options, (err, status) => {
-  if (err) return console.error(err); // null
-  console.log(status); // Vigente
+  if (err) return console.error(err);
+  console.log(status);
 });
 ```
 
