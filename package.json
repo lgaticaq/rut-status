@@ -7,7 +7,8 @@
     "prepublish": "npm run lint -s",
     "lint": "eslint src",
     "pretest": "npm run lint -s",
-    "test": "mocha"
+    "test": "istanbul cover _mocha",
+    "coveralls": "coveralls < coverage/lcov.info"
   },
   "engines": {
     "node": ">=4"
@@ -31,7 +32,9 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "coveralls": "^2.11.9",
     "eslint": "^2.9.0",
+    "istanbul": "^0.4.3",
     "mocha": "^2.4.5",
     "nock": "^8.0.0"
   },
