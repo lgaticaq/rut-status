@@ -1,14 +1,11 @@
 'use strict';
 
-import path from 'path';
-
-import {expect} from 'chai';
-import nock from 'nock';
-
-import lib from '../lib';
+const path = require('path');
+const expect = require('chai').expect;
+const nock = require('nock');
+const lib = require('../src');
 
 describe('rut-status', () => {
-
 
   describe('vigent', () => {
 
@@ -31,20 +28,11 @@ describe('rut-status', () => {
         .replyWithFile(200, path.join(__dirname, 'vigent.html'));
     });
 
-    it('should return a vigent (callback)', (done) => {
-      lib(options, (err, status) => {
-        expect(err).to.be.null;
+    it('should return a vigent', done => {
+      lib(options).then(status => {
         expect(status).to.be.equal('Vigente');
         done();
-      });
-    });
-
-
-    it('should return a vigent (promise)', (done) => {
-      lib(options).then((status) => {
-        expect(status).to.be.equal('Vigente');
-        done();
-      }).fail((err) => {
+      }).catch(err => {
         expect(err).to.be.null;
         done();
       });
@@ -72,19 +60,11 @@ describe('rut-status', () => {
         .replyWithFile(200, path.join(__dirname, 'not-vigent.html'));
     });
 
-    it('should return a not vigent (callback)', (done) => {
-      lib(options, (err, status) => {
-        expect(err).to.be.null;
+    it('should return a not vigent', done => {
+      lib(options).then(status => {
         expect(status).to.be.equal('No Vigente');
         done();
-      });
-    });
-
-    it('should return a not vigent (promise)', (done) => {
-      lib(options).then((status) => {
-        expect(status).to.be.equal('No Vigente');
-        done();
-      }).fail((err) => {
+      }).catch(err => {
         expect(err).to.be.null;
         done();
       });
@@ -112,19 +92,11 @@ describe('rut-status', () => {
         .replyWithFile(200, path.join(__dirname, 'not-emitted.html'));
     });
 
-    it('should return a not emitted (callback)', (done) => {
-      lib(options, (err, status) => {
-        expect(err).to.be.null;
+    it('should return a not emitted', done => {
+      lib(options).then(status => {
         expect(status).to.be.equal('No Vigente ( No Emitido)');
         done();
-      });
-    });
-
-    it('should return a not emitted (promise)', (done) => {
-      lib(options).then((status) => {
-        expect(status).to.be.equal('No Vigente ( No Emitido)');
-        done();
-      }).fail((err) => {
+      }).catch(err => {
         expect(err).to.be.null;
         done();
       });
@@ -144,19 +116,11 @@ describe('rut-status', () => {
         .replyWithFile(200, path.join(__dirname, 'invalid.html'));
     });
 
-    it('should return a object vigent false (callback)', (done) => {
-      lib(options, (err, status) => {
-        expect(err).to.eql(new Error('Not found'));
+    it('should return a object vigent false', done => {
+      lib(options).then(status => {
         expect(status).to.be.undefined;
         done();
-      });
-    });
-
-    it('should return a object vigent false (promise)', (done) => {
-      lib(options).then((status) => {
-        expect(status).to.be.undefined;
-        done();
-      }).fail((err) => {
+      }).catch(err => {
         expect(err).to.eql(new Error('Not found'));
         done();
       });

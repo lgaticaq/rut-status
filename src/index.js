@@ -1,11 +1,9 @@
 'use strict';
 
-import cheerio from 'cheerio';
-import Q from 'q';
-import rp from 'request-promise';
+const cheerio = require('cheerio');
+const rp = require('request-promise');
 
-const getStatus = (data, cb) => {
-  const deferred = Q.defer();
+module.exports = data => {
   const qs = {
     RUN: data.rut,
     type: data.type ? data.type.toUpperCase() : 'CEDULA',
@@ -15,15 +13,11 @@ const getStatus = (data, cb) => {
     url: 'https://portal.sidiv.registrocivil.cl/usuarios-portal/pages/DocumentRequestStatus.xhtml',
     qs: qs,
     rejectUnauthorized: false,
-    transform: (body) => cheerio.load(body)
+    transform: cheerio.load
   };
-  rp(options).then(($) => {
+  return rp(options).then($ => {
     const status = $('#tableResult .setWidthOfSecondColumn').text();
-    if (status === '') deferred.reject(new Error('Not found'));
-    deferred.resolve(status);
-  }).catch((err) => deferred.reject(err));
-  deferred.promise.nodeify(cb);
-  return deferred.promise;
+    if (status === '') throw new Error('Not found');
+    return status;
+  });
 };
-
-module.exports = getStatus;
