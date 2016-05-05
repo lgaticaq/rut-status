@@ -1,6 +1,6 @@
 {
   "name": "rut-status",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "Check rut status in registro civil",
   "main": "src",
   "scripts": {
