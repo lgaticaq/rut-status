@@ -35,16 +35,7 @@ const options = {
   serial: 'A111111111'
 };
 
-// Promise
-rutStatus(options)
-  .then(status => console.log(status))
-  .fail(err => console.error(err));
-
-// Callback
-rutStatus(options, (err, status) => {
-  if (err) return console.error(err);
-  console.log(status);
-});
+rutStatus(options).then(console.log).catch(console.error);
 ```
 
 Status:
