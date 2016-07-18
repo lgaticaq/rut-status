@@ -28,7 +28,7 @@
   "homepage": "https://github.com/lgaticaq/rut-status#readme",
   "dependencies": {
     "cheerio": "^0.20.0",
-    "request-promise": "^3.0.0"
+    "request-promise": "^4.0.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
