@@ -6,9 +6,8 @@
 [![Coverage Status](https://img.shields.io/coveralls/lgaticaq/rut-status/master.svg?style=flat-square)](https://coveralls.io/github/lgaticaq/rut-status?branch=master)
 [![dependency Status](https://img.shields.io/david/lgaticaq/rut-status.svg?style=flat-square)](https://david-dm.org/lgaticaq/rut-status#info=dependencies)
 [![devDependency Status](https://img.shields.io/david/dev/lgaticaq/rut-status.svg?style=flat-square)](https://david-dm.org/lgaticaq/rut-status#info=devDependencies)
-[![Join the chat at https://gitter.im/lgaticaq/rut-status](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg?style=flat-square)](https://gitter.im/lgaticaq/rut-status?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Check rut status in registro civil
+> Check rut status in registro civil
 
 ## Installation
 
@@ -27,18 +26,22 @@ Available types:
 
 [Try on Tonic](https://tonicdev.com/npm/rut-status)
 ```js
-const rutStatus = require('rut-status');
+const rutStatus = require('rut-status')
 
 const options = {
   rut: '11111111-1',
   type: 'CEDULA',
   serial: 'A111111111'
-};
+}
 
-rutStatus(options).then(console.log).catch(console.error);
+rutStatus(options).then(console.log).catch(console.error)
 ```
 
 Status:
 - Vigente
 - No Vigente
 - No Vigente ( No Emitido)
+
+## License
+
+[MIT](https://tldrlegal.com/license/mit-license)
